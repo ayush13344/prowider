@@ -18,21 +18,26 @@ const providers = [
   { providerId: 8, name: 'Provider 8', monthlyQuota: 10, usedQuota: 0, roundRobinIndex: 0 },
 ];
 
+// Exported so index.js can call it on startup when RUN_SEED=true
+export async function seedDatabase() {
+  await Provider.deleteMany({});
+  await Lead.deleteMany({});
+  await LeadAssignment.deleteMany({});
+  await WebhookEvent.deleteMany({});
+  console.log('✅ Cleared existing data.');
+
+  await Provider.insertMany(providers);
+  console.log('✅ Seeded 8 providers.');
+}
+
+// Allows running directly: node src/seed.js
 async function seed() {
   try {
     console.log('Connecting to MongoDB...');
     await mongoose.connect(process.env.MONGODB_URI);
     console.log('Connected.');
 
-    // Wipe existing data for a clean seed
-    await Provider.deleteMany({});
-    await Lead.deleteMany({});
-    await LeadAssignment.deleteMany({});
-    await WebhookEvent.deleteMany({});
-    console.log('Cleared existing data.');
-
-    await Provider.insertMany(providers);
-    console.log('Seeded 8 providers successfully.');
+    await seedDatabase();
 
     await mongoose.disconnect();
     console.log('Done. You can now start the server.');
