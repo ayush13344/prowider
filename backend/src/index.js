@@ -23,7 +23,8 @@ app.use(
         'http://localhost:3000',
         'https://prowider-indol.vercel.app',
       ];
-      if (allowed.includes(origin)) {
+      // Allow main URL + all Vercel preview deployments
+      if (allowed.includes(origin) || origin.endsWith('.vercel.app')) {
         callback(null, true);
       } else {
         callback(new Error('Not allowed by CORS'));
