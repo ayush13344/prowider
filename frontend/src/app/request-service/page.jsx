@@ -54,8 +54,6 @@ export default function RequestServicePage() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
-
         .rs-root {
           min-height: calc(100vh - 56px);
           background: #f7f6f3;
@@ -65,7 +63,6 @@ export default function RequestServicePage() {
           padding: 3rem 1.5rem 4rem;
           font-family: 'DM Sans', sans-serif;
         }
-
         .rs-shell {
           width: 100%;
           max-width: 780px;
@@ -77,8 +74,6 @@ export default function RequestServicePage() {
           overflow: hidden;
           box-shadow: 0 2px 40px rgba(0,0,0,0.09);
         }
-
-        /* ── Left panel ── */
         .rs-left {
           background: #1a1a2e;
           padding: 2.5rem 2rem;
@@ -88,7 +83,6 @@ export default function RequestServicePage() {
           position: relative;
           overflow: hidden;
         }
-
         .rs-left::before {
           content: '';
           position: absolute;
@@ -99,7 +93,6 @@ export default function RequestServicePage() {
           top: -60px;
           right: -80px;
         }
-
         .rs-left::after {
           content: '';
           position: absolute;
@@ -110,7 +103,6 @@ export default function RequestServicePage() {
           bottom: 40px;
           left: -50px;
         }
-
         .rs-eyebrow {
           font-family: 'Syne', sans-serif;
           font-size: 11px;
@@ -120,7 +112,6 @@ export default function RequestServicePage() {
           color: #635bff;
           margin-bottom: 1rem;
         }
-
         .rs-left h1 {
           font-family: 'Syne', sans-serif;
           font-size: 2rem;
@@ -129,20 +120,17 @@ export default function RequestServicePage() {
           line-height: 1.15;
           margin: 0 0 1rem;
         }
-
         .rs-left p {
           font-size: 14px;
           color: rgba(255,255,255,0.5);
           line-height: 1.7;
           margin: 0 0 2rem;
         }
-
         .rs-services {
           display: flex;
           flex-direction: column;
           gap: 10px;
         }
-
         .rs-service-chip {
           display: flex;
           align-items: center;
@@ -152,41 +140,21 @@ export default function RequestServicePage() {
           border-radius: 10px;
           padding: 10px 14px;
         }
-
-        .rs-service-chip .chip-icon {
-          font-size: 18px;
-          line-height: 1;
-        }
-
-        .rs-service-chip .chip-text {
-          flex: 1;
-        }
-
-        .rs-service-chip .chip-name {
-          font-size: 13px;
-          font-weight: 500;
-          color: #fff;
-        }
-
-        .rs-service-chip .chip-desc {
-          font-size: 11px;
-          color: rgba(255,255,255,0.4);
-        }
-
+        .rs-service-chip .chip-icon { font-size: 18px; line-height: 1; }
+        .rs-service-chip .chip-text { flex: 1; }
+        .rs-service-chip .chip-name { font-size: 13px; font-weight: 500; color: #fff; }
+        .rs-service-chip .chip-desc { font-size: 11px; color: rgba(255,255,255,0.4); }
         .rs-note {
           margin-top: 2rem;
           font-size: 11px;
           color: rgba(255,255,255,0.25);
           line-height: 1.6;
         }
-
-        /* ── Right panel (form) ── */
         .rs-right {
           padding: 2.5rem 2rem;
           display: flex;
           flex-direction: column;
         }
-
         .rs-form-title {
           font-family: 'Syne', sans-serif;
           font-size: 1.15rem;
@@ -194,11 +162,7 @@ export default function RequestServicePage() {
           color: #1a1a2e;
           margin: 0 0 1.5rem;
         }
-
-        .rs-field {
-          margin-bottom: 1rem;
-        }
-
+        .rs-field { margin-bottom: 1rem; }
         .rs-label {
           display: block;
           font-size: 11.5px;
@@ -208,7 +172,6 @@ export default function RequestServicePage() {
           text-transform: uppercase;
           margin-bottom: 5px;
         }
-
         .rs-input {
           width: 100%;
           padding: 10px 13px;
@@ -222,21 +185,17 @@ export default function RequestServicePage() {
           outline: none;
           -webkit-appearance: none;
         }
-
         .rs-input:focus {
           border-color: #635bff;
           background: #fff;
           box-shadow: 0 0 0 3px rgba(99,91,255,0.1);
         }
-
         .rs-input::placeholder { color: #bbb; }
-
         .rs-row {
           display: grid;
           grid-template-columns: 1fr 1fr;
           gap: 10px;
         }
-
         .rs-btn {
           margin-top: 1.25rem;
           width: 100%;
@@ -256,43 +215,36 @@ export default function RequestServicePage() {
           gap: 8px;
           transition: background 0.15s, transform 0.1s;
         }
-
         .rs-btn:hover:not(:disabled) { background: #635bff; }
         .rs-btn:active:not(:disabled) { transform: scale(0.98); }
         .rs-btn:disabled { opacity: 0.6; cursor: not-allowed; }
-
         .rs-spinner {
           width: 15px;
           height: 15px;
           border: 2px solid rgba(255,255,255,0.3);
           border-top-color: #fff;
           border-radius: 50%;
-          animation: spin 0.6s linear infinite;
+          animation: rsSpin 0.6s linear infinite;
           flex-shrink: 0;
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
-
+        @keyframes rsSpin { to { transform: rotate(360deg); } }
         .rs-alert {
           margin-top: 1rem;
           padding: 11px 14px;
           border-radius: 10px;
           font-size: 13px;
           line-height: 1.5;
-          font-family: 'DM Sans', sans-serif;
         }
-
         .rs-alert-success {
           background: #edfaf3;
           color: #1a7a4a;
           border: 1px solid #b8eecf;
         }
-
         .rs-alert-error {
           background: #fff1f1;
           color: #c0392b;
           border: 1px solid #fbc8c8;
         }
-
         @media (max-width: 620px) {
           .rs-shell { grid-template-columns: 1fr; }
           .rs-left { padding: 2rem 1.5rem; }
@@ -312,7 +264,6 @@ export default function RequestServicePage() {
               <p className="rs-eyebrow">Prowider</p>
               <h1>Request a service</h1>
               <p>Tell us what you need and we'll match you with the right providers in your city.</p>
-
               <div className="rs-services">
                 {services.map((s) => (
                   <div key={s.value} className="rs-service-chip">
@@ -325,13 +276,12 @@ export default function RequestServicePage() {
                 ))}
               </div>
             </div>
-
             <p className="rs-note">
               The same phone number cannot be used for more than one request per service type.
             </p>
           </div>
 
-          {/* Right panel — form */}
+          {/* Right panel */}
           <div className="rs-right">
             <p className="rs-form-title">Your details</p>
 
@@ -362,7 +312,6 @@ export default function RequestServicePage() {
                     required
                   />
                 </div>
-
                 <div className="rs-field">
                   <label className="rs-label">City</label>
                   <input

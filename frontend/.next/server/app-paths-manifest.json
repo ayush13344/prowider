@@ -1,5 +1,5 @@
 {
+  "/request-service/page": "app/request-service/page.js",
   "/dashboard/page": "app/dashboard/page.js",
-  "/test-tools/page": "app/test-tools/page.js",
-  "/request-service/page": "app/request-service/page.js"
+  "/test-tools/page": "app/test-tools/page.js"
 }
