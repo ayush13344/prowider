@@ -7,6 +7,7 @@ import leadsRouter from './routes/leads.js';
 import dashboardRouter from './routes/dashboard.js';
 import sseRouter from './routes/sse.js';
 import webhookRouter from './routes/webhook.js';
+import { seedDatabase } from './seed.js';
 
 dotenv.config();
 
@@ -16,11 +17,18 @@ const PORT = process.env.PORT || 5000;
 // ── Middleware ─────────────────────────────────────────────────────────────────
 app.use(
   cors({
-    origin: [
-      'http://localhost:3000',
-      'https://prowider-indol.vercel.app',
-      process.env.FRONTEND_URL,
-    ].filter(Boolean),
+    origin: function (origin, callback) {
+      if (!origin) return callback(null, true);
+      const allowed = [
+        'http://localhost:3000',
+        'https://prowider-indol.vercel.app',
+      ];
+      if (allowed.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    },
     credentials: true,
   })
 );
@@ -54,8 +62,16 @@ app.use((err, req, res, next) => {
 // ── Database + Server ──────────────────────────────────────────────────────────
 mongoose
   .connect(process.env.MONGODB_URI)
-  .then(() => {
+  .then(async () => {
     console.log('✅ MongoDB connected');
+
+    // Run seed only when RUN_SEED=true (set in Render env vars, then remove after first deploy)
+    if (process.env.RUN_SEED === 'true') {
+      console.log('🌱 Running seed...');
+      await seedDatabase();
+      console.log('🌱 Seed complete.');
+    }
+
     app.listen(PORT, () => {
       console.log(`✅ Server running at http://localhost:${PORT}`);
     });
